@@ -1,0 +1,6 @@
+name: OldPotions
+version: 1.0
+main: com.seninadi.oldpotions.Main
+api-version: '1.21'
+author: SeninAdin
+description: 1.21+ potion atislarini eski haline getirir
