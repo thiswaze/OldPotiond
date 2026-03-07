@@ -12,7 +12,7 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(this, this);
-        getLogger().info("OldPotions aktif - potionlar artik eski gibi ucuyor!");
+        getLogger().info("OldPotions aktif - potionlar 1.20.1 vanilla gibi ucuyor!");
     }
 
     @EventHandler
@@ -20,15 +20,25 @@ public class Main extends JavaPlugin implements Listener {
         if (!(e.getEntity() instanceof ThrownPotion potion)) return;
         if (!(potion.getShooter() instanceof org.bukkit.entity.Player player)) return;
 
-        Vector dir = player.getLocation().getDirection().normalize();
+        // Vanilla 1.20.1 tam değerleri
+        float pitch = player.getLocation().getPitch();
+        float yaw = player.getLocation().getYaw();
         
-        // 1.20.6 gerçek değerleri
-        double speed = 0.75;      // 0.5'ten 0.75'e çıkardım (daha hızlı)
-        double upward = 0.25;     // 0.3'ten 0.25'e düşürdüm (daha az yukarı)
-        double verticalMultiplier = 0.35; // Dikey hız çarpanı
-
-        Vector velocity = dir.multiply(speed);
-        velocity.setY(dir.getY() * verticalMultiplier + upward);
+        // Vanilla'daki -20F pitch offset
+        float adjustedPitch = pitch - 20.0F;
+        
+        // Radyan'a çevir
+        double pitchRad = Math.toRadians(adjustedPitch);
+        double yawRad = Math.toRadians(yaw);
+        
+        // Vanilla velocity hesaplama (tam formül)
+        double x = -Math.sin(yawRad) * Math.cos(pitchRad);
+        double y = -Math.sin(pitchRad);
+        double z = Math.cos(yawRad) * Math.cos(pitchRad);
+        
+        Vector velocity = new Vector(x, y, z);
+        velocity.normalize();
+        velocity.multiply(0.5); // Vanilla hız: 0.5F
         
         potion.setVelocity(velocity);
     }
