@@ -21,10 +21,14 @@ public class Main extends JavaPlugin implements Listener {
         if (!(potion.getShooter() instanceof org.bukkit.entity.Player player)) return;
 
         Vector dir = player.getLocation().getDirection().normalize();
-        double speed = 0.5;
-        double upward = 0.3;
+        
+        // 1.20.6 gerçek değerleri
+        double speed = 0.75;      // 0.5'ten 0.75'e çıkardım (daha hızlı)
+        double upward = 0.25;     // 0.3'ten 0.25'e düşürdüm (daha az yukarı)
+        double verticalMultiplier = 0.35; // Dikey hız çarpanı
 
-        Vector velocity = dir.multiply(speed).setY(dir.getY() * 0.5 + upward);
+        Vector velocity = dir.multiply(speed);
+        velocity.setY(dir.getY() * verticalMultiplier + upward);
         
         potion.setVelocity(velocity);
     }
