@@ -23,7 +23,7 @@ public class Main extends JavaPlugin implements Listener {
         Vector dir = player.getLocation().getDirection().normalize();
         
         // 1.20.6 gerçek değerleri
-        double speed = 0.90;      // 0.5'ten 0.75'e çıkardım (daha hızlı)
+        double speed = 0.80;      // 0.5'ten 0.75'e çıkardım (daha hızlı)
         double upward = 0.15;     // 0.3'ten 0.25'e düşürdüm (daha az yukarı)
         double verticalMultiplier = 0.35; // Dikey hız çarpanı
 
